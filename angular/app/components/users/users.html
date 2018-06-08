@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-8 offset-2">
+        <table class="table" style="background: white">
+            <thead>
+                <tr>
+                <th><input type="checkbox" ng-model="selectall"></th>
+                <th>Tài khoản</th>
+                <th>Email</th>
+                <th>Ngày sinh</th>
+                <th>Ảnh</th>
+                <th>Ngày lập</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat ="u in users">
+                    <td><input type="checkbox" ng-checked="selectall"></td>
+                    <td>{{u.username}}</td>
+                    <td>{{u.email}}</td>
+                    <td> {{u.date_of_birth}}</td>
+                    <td><img src="" ng-src="data:image/png;base64,{{u.avartar}}"></td>
+                    <td>{{u.timestamp}}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

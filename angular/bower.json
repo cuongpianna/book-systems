@@ -1,0 +1,21 @@
+{
+      "name": "angularjs-test",
+      "description": "",
+      "main": "",
+      "authors": [
+        "Nguyen Quoc Dat <cuongpianna1996@gmail.com>"
+      ],
+      "license": "MIT",
+      "homepage": "",
+      "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+      ],
+      "dependencies": {
+        "angular": "1",
+        "angular-ui-router": "ui-router#^0.3.1",
+        "bootstrap": "^3.3.7",
+        "ngstorage": "^0.3.11"
+      }
+    }
