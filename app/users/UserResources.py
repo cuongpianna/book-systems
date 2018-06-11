@@ -1,5 +1,5 @@
 import os
-from flask import request,jsonify
+from flask import request,jsonify,json
 
 from flask_restful import Resource,marshal_with,reqparse
 from flask_marshmallow import Schema
@@ -30,28 +30,29 @@ parser.add_argument('timestamp')
 class UsersResource(Resource):
     def get(self):
         page = int(request.args.get('count')) if request.args.get('count') else 5
-        users = Users.query.all()[:page]
+        users = Users.query.all()
         return userschema.dump(users)
 
     def post(self):
-        data = parser.parse_args()
-        user = Users.query.filter_by(username=data['username']).first()
+        #data = parser.parse_args()
+        #datas = json.dumps(datas)
+        #user = Users.query.filter_by(username=data['username']).first()
         file = request.files['avartar']
-        if user:
-            return jsonify({'msg':'Tai khoan nay da ton tai','av':file.filename})
-        user = Users.query.filter_by(email=data['email']).first()
-        if user:
-            return jsonify({'msg':'Email nay da ton tai'})
+        #if user:
+        #    return jsonify({'msg':'Tai khoan nay da ton tai'})
+        #user = Users.query.filter_by(email=data['email']).first()
+        #if user:
+        #    return jsonify({'msg':'Email nay da ton tai'})
 
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
+        #if file:
+        #    filename = secure_filename(file.filename)
+        #    file.save(os.path.join(UPLOAD_FOLDER, filename))
 
         user = Users(
-            username = data['username'],
-            email = data['email'],
-            password_hash = data['password'],
-            avartar = filename,
+            username = 'ss',
+            email = 'ss',
+            password_hash = 'ss',
+            #avartar = os.path.join(UPLOAD_FOLDER, filename),
         )
         db.session.add(user)
         db.session.commit()
@@ -59,5 +60,6 @@ class UsersResource(Resource):
 
     def delete(self):
         Users.query.delete()
+        #db.session.commit()
         return jsonify({'msg':"Xoa thanh cong"})
 
