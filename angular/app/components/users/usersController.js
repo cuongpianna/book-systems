@@ -3,12 +3,22 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
     $scope.users = [];
     var url = 'http://127.0.0.1:5000/users';
     
+    //get all users
     $http.get(url).success(function(results){
         console.log(results);
         $scope.users = results;
         
     }).error(function(data){console.log(data);});
     
+    $scope.getAllUsers = function(){
+        $http.get(url).success(function(results){
+        console.log(results);
+        $scope.users = results;
+        
+        }).error(function(data){console.log(data);});
+    }
+    
+    //add users
     $scope.addUser = function(){
         var f = document.getElementById('avartar').files[0], r = new FileReader();
         r.onloadend = function(e){
@@ -16,7 +26,9 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
         }
         var ss = r.readAsBinaryString(f);
         console.log(f);
-        UserCRUDService.addUser($scope.user.username,$scope.user.email,$scope.user.password, f)
+        UserCRUDService.addUser($scope.user.username,$scope.user.email,$scope.user.password, f);
+        $scope.info = "New user added successfully!";
+        $scope.getAllUsers();
     }
     
 }]);
