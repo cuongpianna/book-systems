@@ -12,11 +12,13 @@ app = create_app('default')
 def set_allow_origin(resp):
     """ Set origin for GET, POST, PUT, DELETE requests """
 
-    h = resp.headers
-
-    # Allow crossdomain for other HTTP Verbs
-    if request.method != 'OPTIONS' and 'Origin' in request.headers:
-        h['Access-Control-Allow-Origin'] = request.headers['Origin']
+    resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin', '*')
+    resp.headers['Access-Control-Allow-Credentials'] = 'true'
+    resp.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS, GET'
+    resp.headers['Access-Control-Allow-Headers'] = request.headers.get(
+        'Access-Control-Request-Headers', 'Authorization')
+    if app.debug:
+        resp.headers['Access-Control-Max-Age'] = '1'
 
 
     return resp

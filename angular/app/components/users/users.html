@@ -15,6 +15,7 @@
                 <th>Ngày sinh</th>
                 <th>Ảnh</th>
                 <th>Ngày lập</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -23,8 +24,9 @@
                     <td>{{u.username}}</td>
                     <td>{{u.email}}</td>
                     <td> {{u.date_of_birth}}</td>
-                    <td><img src="" ng-src="{{u.avartar}}" alt=""></td>
+                    <td><img src="" ng-src="{{u.avartar}}" alt="" style="width: 50px"></td>
                     <td>{{u.timestamp}}</td>
+                    <td><i class="fas fa-trash-alt"></i></td>
                 </tr>
                 
             </tbody>
@@ -46,22 +48,22 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-          <form action="" method="post">
+          <form action="" method="post" enctype="multipart/form-data">
               <div>
                   <label for="">Username:</label>
-                  <input type="text" class="form-control" placeholder="Enter your username" ng-model="user.username">
+                  <input type="text" class="form-control" placeholder="Enter your username" ng-model="user.username" name="username">
               </div>
               <div>
                   <label for="">Email:</label>
-                  <input type="text" class="form-control" placeholder="Enter your email" ng-model="user.email">
+                  <input type="text" class="form-control" placeholder="Enter your email" ng-model="user.email" name="email">
               </div>
               <div>
                   <label for="">Password</label>
-                  <input type="text" class="form-control" placeholder="Enter your password" ng-model="user.password">
+                  <input type="text" class="form-control" placeholder="Enter your password" ng-model="user.password" name="password">
               </div>
               <div>
                   <label for="">Avartar</label>
-                  <input type="file" class="form-control" ng-model="user.avartar">
+                  <input type="file" class="form-control" ng-model="user.avartar" name="avartar" multiple>
               </div>
           </form>
         </div>
