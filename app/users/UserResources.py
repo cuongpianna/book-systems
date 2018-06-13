@@ -13,7 +13,7 @@ from app import ma,db, UPLOAD_FOLDER
 class UserSchema(ma.ModelSchema):
     class Meta:
         model = Users
-        fields = ('username','email','date_of_birth','avartar','timestamp')
+        fields = ('id','username','email','date_of_birth','avartar','timestamp')
 
 userschema = UserSchema()
 userschema = UserSchema(many=True)
@@ -45,15 +45,15 @@ class UsersResource(Resource):
         if user:
            return jsonify({'msg':'Email nay da ton tai'})
 
-        #filename = file
-        #if file:
-        #    file.save(os.path.join(UPLOAD_FOLDER, filename))
+        #filename = file.filename
+        if file:
+            file.save(os.path.join(UPLOAD_FOLDER, file.filename))
         # path = ''
         #
         #     file.save(os.path.join(UPLOAD_FOLDER, filename))
         #     path = os.path.join(UPLOAD_FOLDER, filename)
 
-        user = Users(username=data['username'],password_hash=data['password'],email=data['email'])
+        user = Users(username=data['username'],password_hash=data['password'],email=data['email'],avartar=os.path.join(UPLOAD_FOLDER,secure_filename(file.filename)))
         db.session.add(user)
         db.session.commit()
         return jsonify({'msg':'Tao tai khoan thanh cong'})

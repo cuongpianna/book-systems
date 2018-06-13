@@ -1,7 +1,8 @@
 <div class="row">
     <h3 class="col-10">All users</h3>
     <div class="col-2">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add user</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="display: inline-block">Add user</button>
+        <button class="btn btn-danger"> Delete all</button>
     </div>    
 </div>
    <div class="row">
@@ -20,7 +21,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat ="u in users">
-                    <td><input type="checkbox" ng-checked="selectall"></td>
+                    <td><input type="checkbox" ng-checked="selectall"    ></td>
                     <td>{{u.username}}</td>
                     <td>{{u.email}}</td>
                     <td> {{u.date_of_birth}}</td>
@@ -63,7 +64,7 @@
               </div>
               <div>
                   <label for="">Avartar</label>
-                  <input type="file" class="form-control" ng-model="user.avartar" name="avartar" multiple>
+                  <input ngf-select type="file"   class="form-control" ng-model="user.avartar" name="avartar" multiple id="avartar">
               </div>
           </form>
         </div>
