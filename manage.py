@@ -14,7 +14,7 @@ def set_allow_origin(resp):
 
     resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin', '*')
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
-    resp.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS, GET, DELETE'
+    resp.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS, GET, DELETE, PUT'
     resp.headers['Access-Control-Allow-Headers'] = request.headers.get(
         'Access-Control-Request-Headers', 'Authorization')
     if app.debug:

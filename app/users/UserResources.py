@@ -80,7 +80,5 @@ class UserResource(Resource):
             msg = "Xoa thanh cong"
         else:
             msg = "Khong ton tai tai khoan"
-        resp = make_response(json.dumps(msg),200)
-        resp.headers.extend({'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'})
-        return resp
+        return jsonify({'msg':msg})
 

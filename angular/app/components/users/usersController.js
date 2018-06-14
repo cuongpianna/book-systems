@@ -56,7 +56,9 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
     
     //delete user
     $scope.deleteUser = function(id){
-        UserCRUDService.deleteUser(id);
+        UserCRUDService.deleteUser(id).success(function(){
+            console.log('sucess..');
+        });
         $scope.getAllUsers();
     }
     
