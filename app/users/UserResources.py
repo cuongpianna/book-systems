@@ -1,6 +1,6 @@
 import os,werkzeug
 from math import floor
-from flask import request,jsonify,json
+from flask import request,jsonify,json, make_response
 
 from flask_restful import Resource,marshal_with,reqparse
 from flask_marshmallow import Schema
@@ -70,4 +70,17 @@ class UsersResource(Resource):
         Users.query.delete()
         db.session.commit()
         return jsonify({'msg':"Xoa thanh cong"})
+
+class UserResource(Resource):
+    def delete(self,id):
+        user = Users.query.get(id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            msg = "Xoa thanh cong"
+        else:
+            msg = "Khong ton tai tai khoan"
+        resp = make_response(json.dumps(msg),200)
+        resp.headers.extend({'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'})
+        return resp
 

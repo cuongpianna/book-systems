@@ -5,6 +5,7 @@ app.service('UserCRUDService', ['$http', function ($http) {
         fd.append('email', email);
         fd.append('password', password);
         fd.append('avartar', avartar);
+        
         $http.post('http://127.0.0.1:5000/users', fd, {
                 transformRequest: angular.identity,
                 headers: {
@@ -18,4 +19,20 @@ app.service('UserCRUDService', ['$http', function ($http) {
                 console.log(data);
             });
     }
+    
+    this.deleteUser = function(id){
+        $http({
+            method: 'DELETE',
+            url: 'http://127.0.0.1:5000/users/'+id,
+            data: {
+                id: $http
+            },
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }).success(function(response){
+            console.log(response);
+        })
+    }
+    
 }]);

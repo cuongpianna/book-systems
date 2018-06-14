@@ -13,7 +13,7 @@ ma = Marshmallow()
 
 from config import config
 from .models import Users
-from .users.UserResources import UsersResource
+from .users.UserResources import UsersResource, UserResource
 
 
 def create_app(config_name):
@@ -25,5 +25,6 @@ def create_app(config_name):
     cor = CORS(app,resources={r"*": {"origins": "*"}})
     api = Api(app)
     api.add_resource(UsersResource,'/users')
+    api.add_resource(UserResource,'/users/<id>')
 
     return app

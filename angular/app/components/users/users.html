@@ -26,13 +26,16 @@
             </thead>
             <tbody>
                 <tr ng-repeat="u in users track by $index">
-                    <td><input type="checkbox" ng-checked="selectall"></td>
+                    <td><input type="checkbox" ng-checked="selectall" id="{{u.id}}"><span style="display: none"></span></td>
                     <td>{{u.username}}</td>
                     <td>{{u.email}}</td>
                     <td> {{u.date_of_birth}}</td>
                     <td><img src="" ng-src="{{u.avartar}}" alt="" style="width: 50px"></td>
                     <td>{{u.timestamp}}</td>
-                    <td><i class="fa fa-trash"></i></td>
+                    <td>
+                        <a href=""><i class="fa fa-pencil"></i></a>
+                        <a href=""><i class="fa fa-ban" aria-hidden="true" style="color:red" ng-click="deleteUser(u.id)"></i></a>
+                    </td>
                 </tr>
 
             </tbody>

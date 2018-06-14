@@ -15,6 +15,7 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
         
     }).error(function(data){console.log(data);});
     
+    //function to get all users
     $scope.getAllUsers = function(offset,limit){
         if (offset === undefined){
             offset = '1';
@@ -50,6 +51,12 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
         console.log(f);
         UserCRUDService.addUser($scope.user.username,$scope.user.email,$scope.user.password, f);
         //$scope.info = "New user added successfully!";
+        $scope.getAllUsers();
+    }
+    
+    //delete user
+    $scope.deleteUser = function(id){
+        UserCRUDService.deleteUser(id);
         $scope.getAllUsers();
     }
     
