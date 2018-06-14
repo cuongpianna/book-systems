@@ -1,4 +1,5 @@
 import os,werkzeug
+from math import floor
 from flask import request,jsonify,json
 
 from flask_restful import Resource,marshal_with,reqparse
@@ -28,15 +29,26 @@ parser.add_argument('avartar',type=werkzeug.datastructures.FileStorage,location=
 
 class UsersResource(Resource):
     def get(self):
-        page = int(request.args.get('count')) if request.args.get('count') else 5
-        users = Users.query.all()
-        return userschema.dump(users)
+        limit = int(request.args.get('limit')) if request.args.get('limit') else 5
+        offset = int(request.args.get('offset')) if request.args.get('offset') else 1
+        users = Users.query.all()[(limit*(offset-1)):(limit*(offset-1)+limit)]
+        total_users = len(Users.query.all())
+        if type(total_users/limit) == int:
+            last_page = floor(total_users / limit)
+        else:
+            last_page = floor(total_users / limit ) + 1
+        #last_page = len(Users.query.all())/limit
+        return jsonify({
+            'last_page': last_page,
+            'offset': offset,
+            'limit': limit,
+            'data':userschema.dump(users)
+        })
 
     def post(self):
         data = parser.parse_args()
         user = Users.query.filter_by(username=data['username']).first()
         file = data['avartar']
-        #file = request.files['avartar']
 
         if user:
            return jsonify({'msg':'Tai khoan nay da ton tai'})
@@ -45,13 +57,8 @@ class UsersResource(Resource):
         if user:
            return jsonify({'msg':'Email nay da ton tai'})
 
-        #filename = file.filename
         if file:
             file.save(os.path.join(UPLOAD_FOLDER, file.filename))
-        # path = ''
-        #
-        #     file.save(os.path.join(UPLOAD_FOLDER, filename))
-        #     path = os.path.join(UPLOAD_FOLDER, filename)
 
         user = Users(username=data['username'],password_hash=data['password'],email=data['email'],avartar=os.path.join(UPLOAD_FOLDER,secure_filename(file.filename)))
         db.session.add(user)

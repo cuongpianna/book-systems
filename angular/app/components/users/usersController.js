@@ -1,6 +1,11 @@
 var usersController = app.controller('usersController',['$scope','$http','UserCRUDService',function($scope,$http,UserCRUDService){
     $scope.msg = 'leu leu';
     $scope.users = [];
+    $scope.offset = 1;
+    $scope.range = [];
+    $scope.lastpage = 1;
+    $scope.limit = 5;
+    
     var url = 'http://127.0.0.1:5000/users';
     
     //get all users
@@ -10,12 +15,29 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
         
     }).error(function(data){console.log(data);});
     
-    $scope.getAllUsers = function(){
-        $http.get(url).success(function(results){
-        console.log(results);
-        $scope.users = results;
+    $scope.getAllUsers = function(offset,limit){
+        if (offset === undefined){
+            offset = '1';
+        }
+        if (limit === undefined){
+            limit = '5';
+        }
         
-        }).error(function(data){console.log(data);});
+        $http.get('http://127.0.0.1:5000/users' + '?offset=' + offset + '&limit=' + limit)
+            .success(function(results){
+                console.log(results.data[0]);
+                $scope.users = results.data[0];
+                $scope.offset = results.offset;
+                $scope.lastpage = results.last_page;
+                console.log(results.offset);
+            
+                var pages = [];
+                for (var i = 1; i <= results.last_page; i++) {
+                    pages.push(i);
+                }
+                $scope.range = pages;
+            })
+            .error(function(data){console.log(data);});
     }
     
     //add users
@@ -27,8 +49,16 @@ var usersController = app.controller('usersController',['$scope','$http','UserCR
         var ss = r.readAsBinaryString(f);
         console.log(f);
         UserCRUDService.addUser($scope.user.username,$scope.user.email,$scope.user.password, f);
-        $scope.info = "New user added successfully!";
+        //$scope.info = "New user added successfully!";
         $scope.getAllUsers();
     }
     
 }]);
+
+app.directive('userPagi', function(){
+   return {
+      restrict: 'E',
+      templateUrl: 'app/components/users/s.html',
+      replace: true
+   };
+});
