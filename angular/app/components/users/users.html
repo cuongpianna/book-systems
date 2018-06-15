@@ -1,18 +1,18 @@
 <div class="row">
     <h3 class="col-2">All users</h3>
     <div class="col-8">
-        <div class="alert alert-info alert-dismissible" role="alert" ng-if="info">
+        <div class="alert alert-info alert-dismissible text-center" role="alert" ng-if="info" style="transition: 1s">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true" ng-click="clearInfo()">&times;</span></button> {{info}}
         </div>
     </div>
     <div class="col-2">
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="display: inline-block">Add user</button>
-        <button class="btn btn-danger"> Delete all</button>
+        <button class="btn btn-danger" ng-click="deleteMultilUser()"> Delete all</button>
     </div>
 </div>
 <div class="row">
     <div class="col-8 offset-2">
-        <table class="table" style="background: white">
+        <table class="table" style="background: white; transition: 1s">
             <thead>
                 <tr>
                     <th><input type="checkbox" ng-model="selectall"></th>
@@ -24,9 +24,9 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody ng-init="getAllUsers()">
                 <tr ng-repeat="u in users track by $index">
-                    <td><input type="checkbox" ng-checked="selectall" id="{{u.id}}"><span style="display: none"></span></td>
+                    <td><input type="checkbox" ng-checked="selectall" id="{{u.id}}" class="userselect" data-id="{{u.id}}"><span style="display: none"></span></td>
                     <td>{{u.username}}</td>
                     <td>{{u.email}}</td>
                     <td> {{u.date_of_birth}}</td>
@@ -34,7 +34,7 @@
                     <td>{{u.timestamp}}</td>
                     <td>
                         <a href=""><i class="fa fa-pencil"></i></a>
-                        <a href=""><i class="fa fa-ban" aria-hidden="true" style="color:red" ng-click="deleteUser(u.id)"></i></a>
+                        <a href=""><i class="fa fa-ban" aria-hidden="true" style="color:red" ng-click="deleteUser(u)"></i></a>
                     </td>
                 </tr>
 

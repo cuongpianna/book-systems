@@ -1,9 +1,14 @@
-app.config(function($routeProvider){
-    $routeProvider.when('/dashboard',{
+app.config(function($stateProvider,$urlRouterProvider){
+    $urlRouterProvider.otherwise('/admin')
+    
+    $stateProvider
+        .state('admin',{
+        url: '/admin',
         controller: 'homeController',
         templateUrl: 'app/components/home/home.html'
     })
-    .when('/users',{
+        .state('users',{
+        url: '/admin/users',
         templateUrl: 'app/components/users/users.html',
         controller: 'usersController',
     })

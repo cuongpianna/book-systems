@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ngRoute','ngResource','ngFileUpload','angularUtils.directives.dirPagination']);
+var app = angular.module("app", ['ui.router','ngResource','ngFileUpload','angularUtils.directives.dirPagination']);
 app.controller("HelloController", function($scope) {
   $scope.message = "Hello, AngularJS";	
 });
