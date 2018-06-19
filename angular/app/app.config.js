@@ -8,7 +8,7 @@ app.config(function($stateProvider,$urlRouterProvider){
         templateUrl: 'app/components/home/home.html'
     })
         .state('users',{
-        url: '/admin/users',
+        url: '/admin/users?offset&limit',
         templateUrl: 'app/components/users/users.html',
         controller: 'usersController',
     })

@@ -1,11 +1,11 @@
-var usersController = app.controller('usersController', ['$scope', '$http', 'UserCRUDService', function ($scope, $http, UserCRUDService) {
+var usersController = app.controller('usersController', ['$scope', '$http','$stateParams', 'UserCRUDService', function ($scope, $http,$stateParams, UserCRUDService) {
     $scope.msg = 'leu leu';
     $scope.users = [];
     $scope.offset = 1;
     $scope.range = [];
     $scope.lastpage = 1;
     $scope.limit = 5;
-    
+
     $scope.userIDs = new Array();
 
     var url = 'http://127.0.0.1:5000/users';
@@ -22,10 +22,12 @@ var usersController = app.controller('usersController', ['$scope', '$http', 'Use
     //function to get all users
     $scope.getAllUsers = function (offset, limit) {
         if (offset === undefined) {
-            offset = '1';
+            offset = $stateParams.offset || '1';
+            //$scope.offset = offset;
         }
         if (limit === undefined) {
-            limit = '5';
+            limit = $stateParams.limit || '5';
+            $scope.limit = limit;
         }
 
         $http.get('http://127.0.0.1:5000/users' + '?offset=' + offset + '&limit=' + limit)
@@ -70,21 +72,23 @@ var usersController = app.controller('usersController', ['$scope', '$http', 'Use
             $scope.info = "Deleted an user!"
         }
     }
-    
-    $scope.deleteMultilUser = function(list){
-        var allItem = $('.userselect');
-        var itemList = [];
-        var totalItem = 0;
-        angular.forEach(allItem,function(item){
-            if(item.checked){
-                itemList.push(parseInt(item.attributes['data-id'].value));
-                UserCRUDService.deleteUser(item.attributes['data-id'].value);
-                totalItem ++;
-            }
-        })
-        $scope.info('Deleted '+ totalItem + ' item');
-        console.log(itemList);
-        
+
+    $scope.deleteMultilUser = function (list) {
+        if (confirm("Are you sure to delete these items?")) {
+            var allItem = $('.userselect');
+            var itemList = [];
+            var totalItem = 0;
+            angular.forEach(allItem, function (item) {
+                if (item.checked) {
+                    itemList.push(parseInt(item.attributes['data-id'].value));
+                    UserCRUDService.deleteUser(item.attributes['data-id'].value);
+                    totalItem++;
+                }
+            })
+            $scope.info('Deleted ' + totalItem + ' item');
+            console.log(itemList);
+        }
+
     }
 
 }]);
